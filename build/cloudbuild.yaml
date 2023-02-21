@@ -1,0 +1,3 @@
+steps:
+  - name: gcr.io/cloud-builders/gsutil
+    args: ["-m", "rsync", "-r", "-c", "-d", "./dags/", "gs://us-central1-test-f3c5800e-bucket/dags"]
