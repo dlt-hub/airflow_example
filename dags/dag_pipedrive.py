@@ -4,11 +4,9 @@ from airflow.operators.python import PythonOperator
 from pipedrive.pipedrive import pipedrive_source
 
 def pipedrive_pipeline():
-    import pip
-    installed_packages = pip.get_installed_distributions()
-    installed_packages_list = sorted(["%s==%s" % (i.key, i.version)
-                                      for i in installed_packages])
-    print(installed_packages_list)
+    import subprocess
+    libs = subprocess.check_output("pip3 freeze", shell=True);
+    print(libs)
 
     pipeline = dlt.pipeline(pipeline_name='pipedrive_renamed', destination='bigquery', dataset_name='pipedrive_raw')
     load_info = pipeline.run(pipedrive_source(fix_custom_fields=True))
