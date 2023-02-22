@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
 from airflow import DAG
+from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from pipedrive.pipedrive import pipedrive_source
 
 def pipedrive_pipeline():
     import subprocess
-    libs = subprocess.check_output("pip3 freeze", shell=True);
+    libs = subprocess.check_output("pip freeze", shell=True);
     print(libs)
 
     pipeline = dlt.pipeline(pipeline_name='pipedrive_renamed', destination='bigquery', dataset_name='pipedrive_raw')
@@ -33,6 +34,11 @@ dag = DAG(dag_id='pipedrive',
           catchup=False)
 
 
+libs_check = BashOperator(
+    task_id="run_after_loop",
+    bash_command="pip freeze",
+)
+
 load_task = PythonOperator(
         task_id="load_pipedrive",
         python_callable=pipedrive_pipeline,
@@ -42,4 +48,4 @@ load_task = PythonOperator(
         #on_failure_callback=,
         dag=dag)
 
-load_task
+libs_check >> load_task
