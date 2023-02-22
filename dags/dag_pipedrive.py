@@ -23,7 +23,7 @@ default_args = {
     'email_on_retry': False,
     'retries': 3,
     'retry_delay': timedelta(minutes=1),
-    'start_date': datetime(2023, 02, 21),
+    'start_date': datetime(2023, 2, 21),
     'max_active_runs': 1
 }
 
