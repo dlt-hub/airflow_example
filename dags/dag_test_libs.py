@@ -1,4 +1,4 @@
-"""A liveness prober dag for monitoring composer.googleapis.com/environment/healthy."""
+
 import airflow
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
@@ -13,7 +13,7 @@ default_args = {
 dag = DAG(
     'airflow_library_test',
     default_args=default_args,
-    description='liveness monitoring dag',
+    description='airflow_library_test',
     schedule_interval='*/60 * * * *',
     max_active_runs=2,
     catchup=False,
