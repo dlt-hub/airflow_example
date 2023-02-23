@@ -11,6 +11,7 @@ To get an api key: https://pipedrive.readme.io/docs/how-to-find-the-api-token
 import dlt
 import functools
 import requests
+import time
 
 from .custom_field_munger import munge_push_func, pull_munge_func, parsed_mapping
 
@@ -86,6 +87,9 @@ def _paginated_get(url, headers, params):
     while is_next_page:
         response = requests.get(url, headers=headers, params=params)
         response.raise_for_status()
+        # rate limitation handler
+        if int(response.headers.get("x-ratelimit-remaining")) < 10:
+            time.sleep(2)
         page = response.json()
         # yield data only
         data = page['data']
@@ -98,6 +102,15 @@ def _paginated_get(url, headers, params):
         if is_next_page:
             params['start'] = pagination_info.get("next_start")
 
+def retry_after_wait_gen():
+    while True:
+        # This is called in an except block so we can retrieve the exception
+        # and check it.
+        exc_info = sys.exc_info()
+        resp = exc_info[1].response
+        sleep_time_str = resp.headers.get('X-RateLimit-Reset')
+        logger.info("API rate limit exceeded -- sleeping for %s seconds", sleep_time_str)
+        yield math.floor(float(sleep_time_str))
 
 def _get_endpoint(entity, pipedrive_api_key, extra_params=None, munge_custom_fields=True):
     """
