@@ -9,7 +9,7 @@ import dlt
 def pipedrive_pipeline():
 
     pipeline = dlt.pipeline(pipeline_name='pipedrive_pipeline', destination='bigquery', dataset_name='pipedrive_raw')
-    load_info = pipeline.run(pipedrive_source(fix_custom_fields=True))
+    load_info = pipeline.run(pipedrive_source())
     print(load_info)
 
 
