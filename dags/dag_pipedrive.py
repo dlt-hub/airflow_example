@@ -2,15 +2,15 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-from pipedrive.pipedrive import pipedrive_source
+from pipedrive import pipedrive_source
 import dlt
+
 
 def pipedrive_pipeline():
 
-    pipeline = dlt.pipeline(pipeline_name='pipedrive_renamed', destination='bigquery', dataset_name='pipedrive_raw')
+    pipeline = dlt.pipeline(pipeline_name='pipedrive_pipeline', destination='bigquery', dataset_name='pipedrive_raw')
     load_info = pipeline.run(pipedrive_source(fix_custom_fields=True))
     print(load_info)
-
 
 
 default_args = {
