@@ -62,7 +62,7 @@ def make_loading_task(resource_list):
 
 field_names_task = PythonOperator(
         task_id=f"load_pipedrive_field_names",
-        op_args=['activityFields', 'dealFields', 'organizationFields', 'personFields', 'productFields'],
+        op_args=[['activityFields', 'dealFields', 'organizationFields', 'personFields', 'productFields']],
         python_callable=pipedrive_resource,
         trigger_rule="all_done",
         retries=0,
