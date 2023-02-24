@@ -10,7 +10,7 @@ import dlt
 def pipedrive_resource(resource_list):
     name = '_'.join(resource_list)
     pipeline = dlt.pipeline(pipeline_name=f'pipedrive_pipeline_{name}', destination='bigquery', dataset_name='pipedrive_raw_tasks')
-    load_info = pipeline.run(pipedrive_source().with_resources(resource_list))
+    load_info = pipeline.run(pipedrive_source().with_resources(*resource_list))
     print(load_info)
 
 
@@ -21,7 +21,7 @@ resource_groups = [['organizationFields','organizations'],
                    ['stages'],
                    ['users'],
                    ['activityFields', 'activities'],
-['dealFields','deals', 'deals_flow', 'deals_participants']
+['dealFields', 'deals', 'deals_flow', 'deals_participants']
 ]
 
 
@@ -49,7 +49,7 @@ def make_loading_task(resource_list):
     # load the values if needed in the command you plan to execute
     return PythonOperator(
         task_id=f"load_pipedrive_{name}",
-        op_args=resource_list,
+        op_args=[resource_list],
         python_callable=pipedrive_resource,
         trigger_rule="all_done",
         retries=0,
