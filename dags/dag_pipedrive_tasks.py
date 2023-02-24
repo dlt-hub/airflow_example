@@ -1,3 +1,4 @@
+
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.bash import BashOperator
@@ -8,21 +9,24 @@ import dlt
 
 
 def pipedrive_resource(resource_list):
-    name = '_'.join(resource_list)
-    pipeline = dlt.pipeline(pipeline_name=f'pipedrive_pipeline_{name}', destination='bigquery', dataset_name='pipedrive_raw_tasks')
-    load_info = pipeline.run(pipedrive_source().with_resources(*resource_list))
+    pipeline = dlt.pipeline(pipeline_name=f'pipedrive_tasks', destination='bigquery', dataset_name='pipedrive_raw_tasks')
+    load_info = pipeline.run(pipedrive_source().with_resources(resource_list))
     print(load_info)
 
 
-resource_groups = [['organizationFields','organizations'],
+resource_groups = [['organizations'],
                    ['pipelines'],
-                   ['personFields','persons'],
-                   ['productFields','products'],
+                   ['persons'],
+                   ['products'],
                    ['stages'],
                    ['users'],
-                   ['activityFields', 'activities'],
-['dealFields', 'deals', 'deals_flow', 'deals_participants']
+                   ['activities'],
+['deals', 'deals_flow', 'deals_participants']
 ]
+#'custom_fields_mapping', 'activityFields', 'personFields', 'pipelines', 'organizations', 'products', 'persons', 'deals_flow', 'stages', 'dealFields', 'organizationFields', 'activities', 'deals_participants', 'users', 'productFields', 'deals'
+#['activityFields', 'dealFields', 'organizationFields', 'personFields', 'productFields']
+
+
 
 
 default_args = {
@@ -55,7 +59,17 @@ def make_loading_task(resource_list):
         retries=0,
         dag=dag)
 
+
+field_names_task = PythonOperator(
+        task_id=f"load_pipedrive_field_names",
+        op_args=['activityFields', 'dealFields', 'organizationFields', 'personFields', 'productFields'],
+        python_callable=pipedrive_resource,
+        trigger_rule="all_done",
+        retries=0,
+        dag=dag)
+
+
+
 for resource_list in resource_groups:
         task = make_loading_task(resource_list)
-        task
-
+        field_names_task >> task
