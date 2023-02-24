@@ -10,7 +10,7 @@ import dlt
 
 def pipedrive_resource(resource_list):
     pipeline = dlt.pipeline(pipeline_name=f'pipedrive_tasks', destination='bigquery', dataset_name='pipedrive_raw_tasks')
-    load_info = pipeline.run(pipedrive_source().with_resources(resource_list))
+    load_info = pipeline.run(pipedrive_source().with_resources(*resource_list))
     print(load_info)
 
 
