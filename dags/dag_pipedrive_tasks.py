@@ -14,16 +14,14 @@ def pipedrive_resource(resource_list):
     print(load_info)
 
 
-'custom_fields_mapping', 'activityFields', 'personFields', 'pipelines', 'organizations', 'products', 'persons', 'deals_flow', 'stages', 'dealFields', 'organizationFields', 'activities', 'deals_participants', 'users', 'productFields', 'deals'
-
-resource_groups = [['organizations'],
+resource_groups = [['organizationFields','organizations'],
                    ['pipelines'],
-                   ['persons'],
-                   ['products'],
+                   ['personFields','persons'],
+                   ['productFields','products'],
                    ['stages'],
                    ['users'],
-                   ['activities'],
-['deals', 'deals_flow', 'deals_participants']
+                   ['activityFields', 'activities'],
+['dealFields','deals', 'deals_flow', 'deals_participants']
 ]
 
 
