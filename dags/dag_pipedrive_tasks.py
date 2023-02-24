@@ -21,7 +21,8 @@ resource_groups = [['organizations'],
                    ['stages'],
                    ['users'],
                    ['activities'],
-['deals', 'deals_flow', 'deals_participants']
+                   ['deals', 'deals_flow', 'deals_participants'],
+                   ['custom_fields_mapping']
 ]
 #'custom_fields_mapping', 'activityFields', 'personFields', 'pipelines', 'organizations', 'products', 'persons', 'deals_flow', 'stages', 'dealFields', 'organizationFields', 'activities', 'deals_participants', 'users', 'productFields', 'deals'
 #['activityFields', 'dealFields', 'organizationFields', 'personFields', 'productFields']
