@@ -66,11 +66,12 @@ field_names_task = PythonOperator(
         op_args=[['activityFields', 'dealFields', 'organizationFields', 'personFields', 'productFields']],
         python_callable=pipedrive_resource,
         trigger_rule="all_done",
-        retries=0,
+        retries=3,
         dag=dag)
 
 
-
+prv_task = field_names_task
 for resource_list in resource_groups:
         task = make_loading_task(resource_list)
-        field_names_task >> task
+        prv_task >> task
+        prv_task = task
