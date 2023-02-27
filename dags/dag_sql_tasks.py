@@ -13,10 +13,11 @@ from datetime import datetime, timedelta
 
 
 def get_resource_names_cached(name, cache_expiry_hours=6):
-    v = Variable.get(name, deserialize_json=True)
+    v = Variable.get(name, None, deserialize_json=True)
+
     now = datetime.now()
-    cached_at = v['created_at']
-    if cached_at > now - timedelta(hours=cache_expiry_hours):
+    cached_at = v.get('created_at')
+    if not v or cached_at > now - timedelta(hours=cache_expiry_hours):
         value = sql_database().resources.keys()
         Variable.set(name, {'created_at':datetime.now(), 'value': value}, serialize_json=True)
         return value
