@@ -6,7 +6,7 @@ from airflow.operators.python import PythonOperator
 from pipedrive import pipedrive_source
 import dlt
 
-from sql_source import sql_database
+from sql_source.sql_database import sql_database
 
 from airflow.models import Variable
 from datetime import datetime, timedelta
@@ -24,7 +24,7 @@ def get_resource_names_cached(name, cache_expiry_hours=6):
         return v['value']
 
 
-resource_list = get_resource_names_cached('prod_sql_resource_list')
+
 
 def resource_pipeline(resource):
     pipeline = dlt.pipeline(
@@ -67,6 +67,7 @@ def make_loading_task(resource):
         dag=dag)
 
 
+resource_list = get_resource_names_cached('prod_sql_resource_list')
 prv_task = None
 for r in resource_list:
         task = make_loading_task(r)
