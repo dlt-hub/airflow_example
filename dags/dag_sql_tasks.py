@@ -17,12 +17,13 @@ def get_resource_names_cached(name, cache_expiry_hours=6):
 
     now = datetime.now()
     cached_at = v.get('created_at')
-    if not v or cached_at > now - timedelta(hours=cache_expiry_hours):
+    if v and cached_at <  now - timedelta(hours=cache_expiry_hours):
+        return v['value']
+    else:
         value = sql_database().resources.keys()
         Variable.set(name, {'created_at':datetime.now(), 'value': value}, serialize_json=True)
         return value
-    else:
-        return v['value']
+
 
 
 
