@@ -6,7 +6,7 @@ from airflow.operators.python import PythonOperator
 from pipedrive import pipedrive_source
 import dlt
 
-from sql_database.sql_database import sql_database
+from sql_source import sql_database
 
 from airflow.models import Variable
 from datetime import datetime, timedelta
@@ -22,7 +22,6 @@ def get_resource_names_cached(name, cache_expiry_hours=6):
         return value
     else:
         return v['value']
-
 
 
 resource_list = get_resource_names_cached('prod_sql_resource_list')
