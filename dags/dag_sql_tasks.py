@@ -14,7 +14,6 @@ from datetime import datetime, timedelta
 
 def get_resource_names_cached(name, cache_expiry_hours=6):
     v = Variable.get(name, default_var={'created_at': datetime(2020, 1, 1),}, deserialize_json=True)
-    created_at = v.get('created_at')
     now = datetime.now()
     if v.get('created_at') < now - timedelta(hours=cache_expiry_hours):
         return v['value']
