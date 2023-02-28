@@ -25,7 +25,6 @@ def get_resource_names_cached(name, cache_expiry_hours=6):
 
 
 
-
 def resource_pipeline(resource):
     pipeline = dlt.pipeline(
         destination='bigquery',
@@ -57,7 +56,6 @@ dag = DAG(dag_id='pipedrive_with_tasks',
 
 
 def make_loading_task(resource):
-    # load the values if needed in the command you plan to execute
     return PythonOperator(
         task_id=f"load_pipedrive_{resource}",
         op_args=[resource],
