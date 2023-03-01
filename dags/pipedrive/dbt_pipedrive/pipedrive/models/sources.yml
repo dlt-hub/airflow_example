@@ -9,4 +9,5 @@ sources:
     schema: "pipedrive_data"
     tables:
       - name: persons
-        schema: "pipedrive_data"
+      - name: persons__email
+      - name: persons__phone
