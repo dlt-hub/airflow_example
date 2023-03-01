@@ -17,7 +17,7 @@ if __name__ == "__main__" :
     venv = dlt.dbt.get_venv(pipeline)
     # get runner, optionally pass the venv
     dbt = dlt.dbt.package(pipeline,
-        "/Users/adrian/PycharmProjects/dlthub/airflow_example/dags/pipedrive/dbt_pipedrive/pipedrive",
+        "pipedrive/dbt_pipedrive/pipedrive",
         venv=venv)
     models = dbt.run_all()
     for m in models:
