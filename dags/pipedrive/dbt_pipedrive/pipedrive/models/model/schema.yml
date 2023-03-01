@@ -1,0 +1,6 @@
+
+version: 2
+
+models:
+  - name: persons
+    description: "A list of persons"

@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: raw
+    quoting:
+      database: true
+      schema: true
+      identifier: true
+    schema: "pipedrive_data"
+    tables:
+      - name: persons
+        schema: "pipedrive_data"
