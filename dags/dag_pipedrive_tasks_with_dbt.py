@@ -5,7 +5,7 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from pipedrive import pipedrive_source
 import dlt
-
+import os
 
 
 def pipedrive_resource(resource_list):
@@ -19,8 +19,9 @@ def pipedrive_dbt():
     # make or restore venv for dbt, uses latest dbt version
     venv = dlt.dbt.get_venv(pipeline)
     # get runner, optionally pass the venv
+    here = os.path.dirname(os.path.realpath(__file__))
     dbt = dlt.dbt.package(pipeline,
-        "pipedrive/dbt_pipedrive/pipedrive",
+        os.path.join(here,"pipedrive/dbt_pipedrive/pipedrive"),
         venv=venv)
     models = dbt.run_all()
     for m in models:
@@ -95,4 +96,4 @@ for resource_list in resource_groups:
         prv_task >> task
         prv_task = task
 
-task >> dbt_pipedrive_task
+prv_task >> dbt_pipedrive_task
