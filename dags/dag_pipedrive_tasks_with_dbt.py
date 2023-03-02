@@ -95,4 +95,4 @@ for resource_list in resource_groups:
         prv_task >> task
         prv_task = task
 
-prv_task >> dbt_pipedrive_task
+task >> dbt_pipedrive_task
