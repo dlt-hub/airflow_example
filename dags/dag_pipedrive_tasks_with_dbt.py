@@ -83,7 +83,7 @@ field_names_task = PythonOperator(
         dag=dag)
 
 dbt_pipedrive_task = PythonOperator(
-        task_id=f"load_pipedrive_field_names",
+        task_id=f"dbt_pipedrive_task",
         python_callable=pipedrive_dbt,
         trigger_rule="all_done",
         retries=3,
