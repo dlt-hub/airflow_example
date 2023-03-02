@@ -6,7 +6,7 @@ sources:
       database: true
       schema: true
       identifier: true
-    schema: "pipedrive_data"
+    schema: "pipedrive_raw"
     tables:
       - name: persons
       - name: persons__email

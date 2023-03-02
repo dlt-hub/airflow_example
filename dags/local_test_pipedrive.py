@@ -6,7 +6,7 @@ if __name__ == "__main__" :
     # run our main example
     # load_pipedrive()
     # load selected tables and display resource info
-    pipeline = dlt.pipeline(pipeline_name='pipedrive2', destination='bigquery', dataset_name='pipedrive_data')
+    pipeline = dlt.pipeline(pipeline_name='pipedrive2', destination='bigquery', dataset_name='pipedrive_raw')
 
     load_info = pipeline.run(pipedrive_source())
     print(load_info)
