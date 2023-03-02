@@ -55,7 +55,7 @@ default_args = {
     'max_active_runs': 1
 }
 
-dag = DAG(dag_id='pipedrive_with_tasks',
+dag = DAG(dag_id='pipedrive_with_tasks_with_dbt',
           default_args=default_args,
           schedule_interval='00 2 * * *',
           max_active_runs=1,
