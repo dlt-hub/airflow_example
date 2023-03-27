@@ -16,9 +16,11 @@ default_args = {
     'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
-    'start_date': '2023-03-08',
-    'max_active_runs': 1,
-    'catchup': False,
+    'start_date': '2023-03-08'
+}
+
+dag_args = {'max_active_runs': 1,
+            'catchup': False
 }
 
 pipeline = dlt.pipeline(
@@ -28,7 +30,8 @@ pipeline = dlt.pipeline(
     full_refresh=False
 )
 
-with DAG(f"dag_{PIPELINE_NAME}", default_args=default_args,  max_active_runs=1):
+
+with DAG(f"dag_{PIPELINE_NAME}", default_args=default_args, **dag_args):
     DltAirflowSource(
         name='dummy_1',
         source=dummy_source(prefix='prefix_1'),
