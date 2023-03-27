@@ -6,7 +6,7 @@ from source import dummy_source
 from helpers.airflow.pipeline import DltAirflowPipeline
 from helpers.airflow.source import DltAirflowSource
 
-PIPELINE_NAME = 'dummy_pipeline_one'
+PIPELINE_NAME = 'dummy_pipeline_one_'
 DESTINATION_NAME = 'bigquery'
 
 default_args = {
@@ -20,7 +20,8 @@ default_args = {
 }
 
 dag_args = {'max_active_runs': 1,
-            'catchup': False
+            'catchup': False,
+            #'on_failure_callback':
 }
 
 

@@ -6,7 +6,7 @@ from airflow import DAG
 from helpers.airflow.source import DltAirflowSource
 from source import dummy_source
 
-PIPELINE_NAME = 'dummy_pipeline_three'
+PIPELINE_NAME = 'dummy_pipeline_three_'
 DESTINATION_NAME = 'bigquery'
 
 default_args = {
