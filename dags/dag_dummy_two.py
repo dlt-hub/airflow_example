@@ -15,7 +15,9 @@ default_args = {
     'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
-    'start_date': '2023-03-08'
+    'start_date': '2023-03-08',
+    'max_active_runs': 1,
+    'catchup': False,
 }
 
 with DAG(f'dag_{PIPELINE_NAME}', default_args=default_args):
