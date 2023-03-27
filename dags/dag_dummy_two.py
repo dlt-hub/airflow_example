@@ -20,7 +20,7 @@ default_args = {
     'catchup': False,
 }
 
-with DAG(f'dag_{PIPELINE_NAME}', default_args=default_args):
+with DAG(f'dag_{PIPELINE_NAME}', default_args=default_args, max_active_runs=1):
     DltAirflowSource(
         name='dummy_1',
         source=dummy_source(prefix='prefix_1'),
