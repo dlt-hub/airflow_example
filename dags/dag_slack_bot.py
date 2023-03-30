@@ -50,7 +50,7 @@ message = """Async standup bot:
 
 a = PythonOperator(
         task_id=f"standup_notification",
-        op_args=[message],
+        op_args=[webhook_url, message],
         python_callable=send_slack_message,
         trigger_rule="all_done",
         retries=1,
