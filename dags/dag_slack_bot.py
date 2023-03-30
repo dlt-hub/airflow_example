@@ -34,16 +34,16 @@ default_args = {
 
 dag = DAG(dag_id='send_slack_message',
           default_args=default_args,
-          schedule_interval='00 8 * * *',
+          schedule_interval='00 12 * * *',
           max_active_runs=1,
           catchup=False)
 
 
 
-message = """Async standup bot: 
-- What did you do yesterday? 
-- What will you do today? 
-- Any blockers?
+message = """* Standup bot: *
+:hourglass: What did you do yesterday?
+:hourglass_flowing_sand: What will you do today?
+:construction: Any blockers?
 """
 
 
