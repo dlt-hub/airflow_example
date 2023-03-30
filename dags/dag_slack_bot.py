@@ -40,7 +40,7 @@ dag = DAG(dag_id='send_slack_message',
 
 
 
-message = """* Standup bot: *
+message = """@channel ** Standup bot: **
 :hourglass: What did you do yesterday?
 :hourglass_flowing_sand: What will you do today?
 :construction: Any blockers?
