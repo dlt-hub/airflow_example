@@ -34,7 +34,7 @@ default_args = {
 
 dag = DAG(dag_id='send_slack_message',
           default_args=default_args,
-          schedule_interval='00 12 * * 1-5',
+          schedule_interval='00 08 * * 1-5',
           max_active_runs=1,
           catchup=False)
 
