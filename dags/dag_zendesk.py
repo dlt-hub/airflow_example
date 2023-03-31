@@ -7,7 +7,7 @@ The disadvantage is that it's less easy to customise than doing your own functio
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from zendesk import zendesk_chat, zendesk_talk, zendesk_support
+from .zendesk import zendesk_chat, zendesk_talk, zendesk_support
 
 
 sources = {'zendesk_support':zendesk_support, 'zendesk_talk':zendesk_talk, 'zendesk_chat':zendesk_chat}

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-from zendesk_pipeline import incremental_pipeline
+from .zendesk_pipeline import incremental_pipeline
 
 
 
