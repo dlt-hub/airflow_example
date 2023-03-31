@@ -14,9 +14,9 @@ sources = {'zendesk_support':zendesk_support, 'zendesk_talk':zendesk_talk, 'zend
 
 
 def loading_pipeline(source):
-    source_name, source_name = source
+    source_name, source_function = source
     pipeline = dlt.pipeline(pipeline_name=source_name, destination='bigquery', dataset_name=source_name)
-    load_info = pipeline.run(source_name)
+    load_info = pipeline.run(source_function)
     print(load_info)
 
 
