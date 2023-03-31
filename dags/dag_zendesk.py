@@ -1,26 +1,18 @@
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.bash import BashOperator
-from airflow.operators.python import PythonOperator
-
-
-
-from datetime import datetime, timedelta
-from airflow import DAG
-from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from zendesk import zendesk_chat, zendesk_talk, zendesk_support
 
 
+sources = {'zendesk_support':zendesk_support, 'zendesk_talk':zendesk_talk, 'zendesk_chat':zendesk_chat}
+
+
 def loading_pipeline(source):
-    pipeline = dlt.pipeline(pipeline_name='pipedrive_pipeline', destination='bigquery', dataset_name='pipedrive_raw')
-    load_info = pipeline.run(source)
+    source_name, source_name = source
+    pipeline = dlt.pipeline(pipeline_name=source_name, destination='bigquery', dataset_name=source_name)
+    load_info = pipeline.run(source_name)
     print(load_info)
 
-
-sources = {'zendesk_support':zendesk_support,
-           'zendesk_talk':zendesk_talk,
-           'zendesk_chat':zendesk_chat}
 
 default_args = {
     'owner': 'airflow',
@@ -41,15 +33,18 @@ dag = DAG(dag_id='pipedrive',
           catchup=False)
 
 
-load_task = PythonOperator(
-        task_id="load_pipedrive",
-        python_callable=incremental_pipeline,
+def make_loading_task(source):
+    source_name, source_function = source
+    return PythonOperator(
+        task_id=f"load_{source_name}",
+        python_callable=loading_pipeline,
+        op_args=[source],
         trigger_rule="all_done",
-        retries=0,
+        retries=1,
         provide_context=True,
-        #on_failure_callback=,
         dag=dag)
 
-load_task
 
-
+for source in sources.items():
+        task = make_loading_task(source)
+        task
