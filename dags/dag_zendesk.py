@@ -1,3 +1,9 @@
+"""
+This is a dag that reads the source from the zendesk folder, without using the pipeline file.
+The advantage is that you do not need the pipeline file anymore, or can use it separately, and you can use it with multiple sources, creating a task and pipeline for each.
+The disadvantage is that it's less easy to customise than doing your own functions and tasks
+"""
+
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
