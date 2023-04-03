@@ -23,16 +23,17 @@ def get_resource_names_cached(name, cache_expiry_hours=6):
         return value
 
 
+from typing import List, AnyStr
 
-
-def resource_pipeline(resource):
+def resource_pipeline(resources: List[AnyStr]):
+    name = ','.join(resources)
     pipeline = dlt.pipeline(
         destination='bigquery',
-        pipeline_name=f'sql_prod_{resource}',
+        pipeline_name=f'sql_prod_{name}',
         dataset_name='prod',
-        full_refresh=True
+        full_refresh=False
     )
-    load_info = pipeline.run(pipedrive_source().with_resources(resource))
+    load_info = pipeline.run(pipedrive_source().with_resources(*resources))
     print(load_info)
 
 
@@ -68,7 +69,7 @@ def make_loading_task(resource):
 resource_list = get_resource_names_cached('prod_sql_resource_list')
 prv_task = None
 for r in resource_list:
-        task = make_loading_task(r)
+        task = make_loading_task([r])
         if not prv_task:
             task
         else:
