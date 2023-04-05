@@ -10,7 +10,7 @@ from airflow.operators.python import PythonOperator
 from zendesk import zendesk_chat, zendesk_talk, zendesk_support
 
 
-sources = {'zendesk_support':zendesk_support, 'zendesk_talk':zendesk_talk, 'zendesk_chat':zendesk_chat}
+sources = {'zendesk_support':zendesk_support}#, 'zendesk_talk':zendesk_talk, 'zendesk_chat':zendesk_chat}
 
 
 def loading_pipeline(source):
@@ -32,7 +32,7 @@ default_args = {
     'max_active_runs': 1
 }
 
-dag = DAG(dag_id='pipedrive',
+dag = DAG(dag_id='Zendesk',
           default_args=default_args,
           schedule_interval='00 2 * * *',
           max_active_runs=1,
