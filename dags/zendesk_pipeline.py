@@ -3,7 +3,7 @@ import dlt
 from zendesk import pendulum, zendesk_chat, zendesk_talk, zendesk_support
 
 
-def load_all():
+def incremental_load_all_default():
     """
     Loads all possible tables for Zendesk Support, Chat, Talk
     """
@@ -13,15 +13,15 @@ def load_all():
     # zendesk support source function
     data_support = zendesk_support(load_all=True)
     # zendesk chat source function
-    data_chat = zendesk_chat()
+    #data_chat = zendesk_chat()
     # zendesk talk source function
     #data_talk = zendesk_talk()
     # run pipeline with all 3 sources
-    info = pipeline.run(data=[data_support, data_chat]) #data_talk
+    info = pipeline.run(data=[data_support])#, data_chat, data_talk])
     return info
 
 
-def ticket_pivot_fields():
+def load_support_with_pivoting():
     """
     Loads Zendesk Support data with pivoting. Simply done by setting the pivot_ticket_fields to true - default option. Loads only the base tables.
     """
@@ -31,7 +31,7 @@ def ticket_pivot_fields():
     return info
 
 
-def incremental_pipeline():
+def incremental_load_all_start_time():
     """
     Implements incremental load when possible to Support, Chat and Talk Endpoints. The default behaviour gets data since the last load time saved in dlt state or
     1st Jan 2000 if there has been no previous loading of the resource. With this setting, the sources will load data since the given data for all incremental endpoints.
@@ -44,18 +44,28 @@ def incremental_pipeline():
     start_time = pendulum.DateTime(year=2023, month=1, day=1)
 
     pipeline = dlt.pipeline(pipeline_name="dlt_zendesk_pipeline", destination='bigquery', full_refresh=False, dataset_name="sample_zendesk_data")
-    #data = zendesk_support(load_all=True, incremental_start_time=start_time)
+    data = zendesk_support(load_all=True, incremental_start_time=start_time)
     data_chat = zendesk_chat(incremental_start_time=start_time)
-    #data_talk = zendesk_talk(incremental_start_time=start_time)
-    info = pipeline.run(data=[data_chat])#data, data_chat, data_talk])
+    data_talk = zendesk_talk(incremental_start_time=start_time)
+    info = pipeline.run(data=[data, data_chat, data_talk])
     return info
 
 
 if __name__ == "__main__":
     # simple run where everything is loaded
-    start = time.time()
-    load_info = incremental_pipeline()
-    end = time.time()
-    print(load_info)
-    print(f"Time taken: {end-start}")
+    #start = time.time()
+    #load_info = incremental_load_all_default()
+    #end = time.time()
+    #print(load_info)
+    #print(f"Time taken: {end-start}")
+    pipeline = dlt.pipeline(pipeline_name="zendesk_support2", destination='bigquery', full_refresh=False, dataset_name="zendesk_support")
+    resources_support = ['ticket_fields', 'tickets', 'ticket_metric_events', 'users', 'sla_policies', 'groups', 'organizations', 'brands',
+      'activities', 'automations', 'custom_agent_roles', 'dynamic_content', 'group_memberships', 'job_status', 'macros',
+      'organization_fields', 'organization_memberships', 'recipient_addresses', 'requests', 'satisfaction_ratings',
+      'sharing_agreements', 'skips', 'suspended_tickets', 'targets', 'ticket_forms', 'ticket_metrics', 'triggers',
+      'user_fields', 'views', 'tags']
+    for res in resources_support:
+        print(res)
 
+        for row in zendesk_support().resources.get(res):
+            print(row)
