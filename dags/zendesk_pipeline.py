@@ -18,7 +18,7 @@ def incremental_load_all_default():
     #data_talk = zendesk_talk()
     # run pipeline with all 3 sources
     info = pipeline.run(data=[data_support])#, data_chat, data_talk])
-    return info
+    print(info)
 
 
 def load_support_with_pivoting():
