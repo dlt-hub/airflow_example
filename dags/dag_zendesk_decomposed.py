@@ -55,7 +55,7 @@ def make_loading_task(source, resource_name):
 prv_task = None
 for source in sources.items():
     source_name, source_function = source
-    for resource_name in source.source_function.keys():
+    for resource_name in source_function.resources.keys():
         task = make_loading_task(source, resource_name)
         if not prv_task:
             task
