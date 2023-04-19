@@ -32,7 +32,7 @@ default_args = {
     'max_active_runs': 1
 }
 
-dag = DAG(dag_id='Zendesk',
+dag = DAG(dag_id='Zendesk_serialised',
           default_args=default_args,
           schedule_interval='00 2 * * *',
           max_active_runs=1,
