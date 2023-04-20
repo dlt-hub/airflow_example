@@ -61,6 +61,6 @@ for source in sources.items():
             task
         else:
             prv_task >> task
-            prv_task = task
+        prv_task = task
 
 
