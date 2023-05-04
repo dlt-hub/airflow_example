@@ -3,7 +3,8 @@ version: 2
 sources:
   - name: active_campaign_dbt_raw
     database: pure-ace-372509
+    schema: active_campaign_dbt_raw
     tables:
+      - name: account_contacts
       - name: contacts
       - name: accounts
-      - name: accounts_contacts
