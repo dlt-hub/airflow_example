@@ -10,7 +10,7 @@ import os
 
 def active_campaign_resource():
     pipeline = dlt.pipeline(pipeline_name=f'active_campaign_dbt', destination='bigquery', dataset_name='active_campaign_dbt_raw')
-    load_info = pipeline.run(active_campaign().with_resources("accounts","accountsContacts","contacts"))
+    load_info = pipeline.run(active_campaign().with_resources("accounts","accountContacts","contacts"))
     print(load_info)
 
 def active_campaign_dbt():
