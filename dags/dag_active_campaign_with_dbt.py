@@ -8,7 +8,7 @@ import dlt
 import os
 
 
-def active_campaign_resource(resource_list):
+def active_campaign_resource():
     pipeline = dlt.pipeline(pipeline_name=f'active_campaign_dbt', destination='bigquery', dataset_name='active_campaign_dbt_raw')
     load_info = pipeline.run(active_campaign().with_resources("accounts","accountsContacts","contacts"))
     print(load_info)
@@ -40,7 +40,7 @@ default_args = {
     'max_active_runs': 1
 }
 
-dag = DAG(dag_id='active_campaign_with_tasks_with_dbt',
+dag = DAG(dag_id='active_campaign_with_dbt',
           default_args=default_args,
           schedule_interval='00 2 * * *',
           max_active_runs=1,
