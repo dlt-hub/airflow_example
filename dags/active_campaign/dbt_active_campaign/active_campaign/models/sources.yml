@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: active_campaign_data
+  - name: active_campaign_dbt_raw
     quoting:
       database: true
       schema: true
