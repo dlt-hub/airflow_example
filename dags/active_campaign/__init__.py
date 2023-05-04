@@ -10,6 +10,13 @@ To get an api key: https://developers.activecampaign.com/reference/authenticatio
 
 import dlt
 from dlt.sources.helpers import requests
+from airflow.models import Variable
+
+def get_credentials():
+    my_variable = Variable.get("my_variable_name")
+    # use the variable in your code
+    print(my_variable)
+
 
 
 @dlt.source
