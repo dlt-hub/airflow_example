@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: raw
+    quoting:
+      database: true
+      schema: true
+      identifier: true
+    schema: "active_campaign_dbt_raw"
+    tables:
+      - name: contacts
+      - name: accounts
+      - name: accounts_contacts
