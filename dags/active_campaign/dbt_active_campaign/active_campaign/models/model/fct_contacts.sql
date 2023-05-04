@@ -12,8 +12,8 @@ SELECT
   email,
   phone,
   DATE(date_trunc(contacts.created_timestamp, MONTH)) as created_month
-FROM {{ source('pure-ace-372509', 'account_contacts')}} AS account_contacts
-LEFT JOIN {{ source('pure-ace-372509', 'contacts')}} AS contacts
+FROM {{ source('active_campaign_dbt_raw', 'account_contacts')}} AS account_contacts
+LEFT JOIN {{ source('active_campaign_dbt_raw', 'contacts')}} AS contacts
     ON contacts.id = account_contacts.contact
-LEFT JOIN {{ source('pure-ace-372509', 'accounts')}} AS accounts
+LEFT JOIN {{ source('active_campaign_dbt_raw', 'accounts')}} AS accounts
     ON account_contacts.account = accounts.id
