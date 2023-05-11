@@ -36,7 +36,7 @@ default_args = {
     'max_active_runs': 1
 }
 
-dag = DAG(dag_id='send_slack_message',
+dag = DAG(dag_id='test_data',
           default_args=default_args,
           schedule_interval='00 08 * * 1-5',
           max_active_runs=1,
@@ -47,7 +47,7 @@ dag = DAG(dag_id='send_slack_message',
 
 
 a = PythonOperator(
-        task_id=f"standup_notification",
+        task_id=f"make_test_data",
         python_callable=dummy_row_pipeline,
         trigger_rule="all_done",
         retries=1,
