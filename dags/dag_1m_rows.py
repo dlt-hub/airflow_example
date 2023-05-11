@@ -6,7 +6,7 @@ from airflow.hooks.base_hook import BaseHook
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-
+import dlt
 
 
 def generate_data(num_rows=1000000):
