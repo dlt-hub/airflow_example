@@ -9,12 +9,16 @@ from airflow.operators.python import PythonOperator
 import dlt
 
 
-def generate_data(num_rows=1000000):
+def generate_data(num_rows=10000000):
     for i in range(num_rows):
         row = {"id": i, 'properties': {'createdate': '2023-02-24T03:00:13.789Z', 'email': 'bh@hubspot.com',
                                                   'firstname': 'Brian', 'hs_object_id': '51',
                                                   'lastmodifieddate': '2023-02-24T03:00:25.112Z',
-                                                  'lastname': 'Halligan (Sample Contact)'},
+                                                  'lastname': 'Halligan (Sample Contact)',
+                                                    'more_data':{'createdate': '2023-02-24T03:00:13.789Z', 'email': 'bh@hubspot.com',
+                                                  'firstname': 'Brian', 'hs_object_id': '51',
+                                                  'lastmodifieddate': '2023-02-24T03:00:25.112Z',
+                                                  'lastname': 'Halligan (Sample Contact)'},},
                                    'createdAt': '2023-02-24T03:00:13.789Z', 'updatedAt': '2023-02-24T03:00:25.112Z', 'archived': False}
         yield row
 
